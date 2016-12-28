@@ -1,0 +1,109 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>android屏幕适配 | Hexo blog</title><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/very-simple.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"></head><body><!-- include the sidebar--><!-- include ./includes/sidebar.jade--><!-- Blog title and subtitle--><header><div class="container header"><a id="logo" href="/." class="title">Hexo blog</a><span class="subtitle"></span><label id="toggle-menu" for="menu" onclick><i class="fa fa-bars"></i></label></div></header><!-- use checkbox hack for toggle nav-bar on small screens--><input id="menu" type="checkbox"><!-- Navigation Links--><nav id="nav"><div class="container"><a href="/" class="sidebar-nav-item active">Home</a><a href="/archives" class="sidebar-nav-item">Archives</a></div></nav><div id="header-margin-bar"></div><!-- gallery that comes before the header--><div class="wrapper"><div class="container post-header"><h1>android屏幕适配</h1></div></div><div class="wrapper"><div class="container meta"><div class="post-time">2016-12-23</div><div class="post-tags"><a class="post-tag-link" href="/tags/Android/">Android</a>/<a class="post-tag-link" href="/tags/屏幕适配/">屏幕适配</a>/<a class="post-tag-link" href="/tags/未完待续/">未完待续</a></div></div></div><article><div class="container post"><h2 id="相关术语和概念"><a href="#相关术语和概念" class="headerlink" title="相关术语和概念"></a>相关术语和概念</h2><h3 id="像素点px"><a href="#像素点px" class="headerlink" title="像素点px"></a>像素点px</h3><p>即pixels。对于720x1280分辨率的屏幕来说，720指横向有720个像素点，1280指纵向有1280个像素点。也由此可知道对角线上的像素个数。</p>
+<h3 id="英寸inch"><a href="#英寸inch" class="headerlink" title="英寸inch"></a>英寸inch</h3><p>5寸的屏幕指对角线长5寸，1寸等于2.45厘米。</p>
+<p>屏幕尺寸：实际物理尺寸，以屏幕的对角线测量。为了简单起见，Android将所有实际屏幕尺寸分为四种通用尺寸：small, normal, large, extra-large</p>
+<blockquote>
+<p>从Android 3.2（API级别13）开始，这些大小组已弃用，有利于根据可用屏幕宽度管理屏幕尺寸的新技术。 如果您正在为Android 3.2及更高版本开发，请参阅为Android 3.2声明平板电脑版面以获取更多信息。</p>
+</blockquote>
+<h3 id="密度dpi"><a href="#密度dpi" class="headerlink" title="密度dpi"></a>密度dpi</h3><p>dpi指每英寸屏幕的像素个数，即dots per inch。或者也叫ppi，即pixels per inch。通过对角线像素/对角线长可以得到屏幕的像素密度。</p>
+<p>屏幕的物理区域内的像素的数量; 通常称为dpi。 例如，与“正常”或“高”密度屏幕相比，“低”密度屏幕在给定物理区域内具有较少的像素。<br>为了简单起见，Android将所有实际屏幕密度分为六个通用密度：low, medium, high, extra-high, extra-extra-high, extra-extra-extra-high</p>
+<p>广义密度</p>
+<table>
+<thead>
+<tr>
+<th>low</th>
+<th>medium</th>
+<th>high</th>
+<th>extra-high</th>
+<th>extra-extra-high</th>
+<th>extra-extra-extra-high</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ldpi</td>
+<td>mdpi</td>
+<td>hdpi</td>
+<td>xdpi</td>
+<td>xxdpi</td>
+<td>xxxdpi</td>
+</tr>
+<tr>
+<td>120dpi</td>
+<td>160dpi</td>
+<td>240dpi</td>
+<td>320dpi</td>
+<td>480dpi</td>
+<td>640dpi</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dp-dip"><a href="#dp-dip" class="headerlink" title="dp(dip)"></a>dp(dip)</h3><p>dp是密度无关的像素（density-independent pixel），在xml布局中通常用来指定控件的尺寸。</p>
+<p>在定义UI布局时应使用的虚拟像素单位，以独立于密度的方式表达布局维度或位置。密度无关像素相当于160dpi屏幕上的一个物理像素，这是系统为“中”密度屏幕所采用的基线密度。 在运行时，系统根据所使用的屏幕的实际密度，根据需要透明地处理dp单元的任何缩放。 dp单位到屏幕像素的转换很简单：<code>px = dp *（dpi / 160）</code>. 例如，在240dpi屏幕上，1dp等于1.5物理像素。 在定义应用程序的UI时，应始终使用dp单位，以确保在不同密度的屏幕上正确显示UI</p>
+<ul>
+<li><p>px与dp转换：<code>px = dp * (dpi / 160)</code></p>
+</li>
+<li><p>Android系统通过两种方式帮助您的应用程序实现密度独立性：</p>
+<ol>
+<li>系统根据当前屏幕密度适当缩放dp单位</li>
+<li>如果需要，系统根据当前屏幕密度将可绘制资源缩放到适当的大小</li>
+</ol>
+</li>
+</ul>
+<h3 id="sp"><a href="#sp" class="headerlink" title="sp"></a>sp</h3><p>sp是尺度大小无关像素（scale-independent pixel），通常用于指定字体的大小。</p>
+<h2 id="适配不同的屏幕"><a href="#适配不同的屏幕" class="headerlink" title="适配不同的屏幕"></a>适配不同的屏幕</h2><p>Android支持多个屏幕的基础是它能够以适当的方式为当前屏幕配置管理应用程序布局和位图可绘制项的呈现。 系统处理大多数工作，以便在每个屏幕配置上正确地渲染应用程序，通过缩放布局以适合屏幕大小/密度，并适当缩放位图(可能导致图片模糊)可绘制的屏幕密度。 但是，为了更好地处理不同的屏幕配置，您还应该：</p>
+<ul>
+<li><p>在清单中显式声明应用程序支持的屏幕大小</p>
+<p>通过声明您的应用程序支持哪些屏幕尺寸，您可以确保只有具有您支持的屏幕的设备才能下载您的应用程序。声明对不同屏幕大小的支持也会影响系统如何在更大的屏幕上绘制应用程序 - 特别是应用程序是否以屏幕兼容模式运行。<br>要声明应用程序支持的屏幕大小，应在清单文件中包含<supports-screens>元素。</supports-screens></p>
+</li>
+<li><p>为不同的屏幕尺寸提供不同的布局</p>
+<p>默认情况下，Android会调整您的应用布局，以适应当前设备屏幕。在大多数情况下，这工作正常。在其他情况下，您的UI可能看起来不太好，可能需要针对不同的屏幕尺寸进行调整。例如，在较大的屏幕上，您可能需要调整某些元素的位置和大小，以利用额外的屏幕空间，或者在较小的屏幕上，您可能需要调整大小，以便所有内容都适合屏幕。<br>可用于提供特定于大小的资源的配置限定符为small，normal，large和xlarge。例如，超大屏幕的布局应该在layout-xlarge /中。<br>从Android 3.2（API级别13）开始，上述大小组已弃用，您应该使用sw <n> dp配置限定符来定义布局资源所需的最小可用宽度。例如，如果多窗格平板电脑布局需要至少600dp的屏幕宽度，则应将其放在layout-sw600dp /中。</n></p>
+</li>
+<li><p>为不同的屏幕密度提供不同的位图</p>
+<p>默认情况下，Android缩放位图可绘制（.png，.jpg和.gif文件）和Nine-Patch可绘制（.9.png文件），以便它们在每个设备上以适当的物理大小进行渲染。例如，如果应用程序仅为基线，中屏幕密度（mdpi）提供位图可绘制项，则系统会在高密度屏幕上对其进行缩放，并在低密度屏幕上缩放它们。此缩放可能导致位图中的伪影。为了确保您的位图看起来最好，您应该为不同的屏幕密度包括不同分辨率的替代版本。<br>可用于特定于密度资源的配置限定符（下面详细描述）是ldpi（低），mdpi（中），hdpi（高），xhdpi超高），xxhdpi（超额高）和xxxhdpi（超额外超额）。例如，高密度屏幕的位图应该在drawable-hdpi /中。</p>
+<blockquote>
+<p>mipmap-xxxhdpi限定符只用于在xxhdpi设备上提供比通常更大的启动器图标。 您不需要为所有应用程式的图片提供xxxhdpi资源。</p>
+<p>将所有的启动器图标放在res / mipmap- [density] /文件夹中，而不是res / drawable- [density] /文件夹中。 Android系统会将资源保留在这些特定于密度的文件夹中，例如mipmap-xxxhdpi，而不考虑安装应用程序的设备的屏幕分辨率。 此行为允许启动程序应用程序选择最佳分辨率图标，让应用程序显示在主屏幕上。</p>
+</blockquote>
+</li>
+</ul>
+<p>在运行时，系统通过以下过程为任何给定资源确保在当前屏幕上以最佳方式显示：</p>
+<ol>
+<li><p>系统使用适当的替代资源</p>
+<p>基于当前屏幕的大小和密度，系统使用应用程序中提供的任何大小和密度特定的资源。例如，如果设备具有高密度屏幕并且应用请求可绘制资源，则系统寻找与设备配置最佳匹配的可绘制资源目录。根据可用的其他替代资源，具有hdpi限定符（例如drawable-hdpi /）的资源目录可能是最佳匹配，因此系统使用此目录中的drawable资源。</p>
+</li>
+<li><p>如果没有匹配资源可用，系统将使用默认资源，并根据需要向上或向下缩放，以匹配当前屏幕大小和密度</p>
+<p>“默认”资源是未使用配置限定符标记的资源。例如，drawable /中的资源是默认的可绘制资源。系统假设默认资源是为基线屏幕大小和密度设计的，这是正常的屏幕大小和中等密度。因此，系统对于高密度屏幕向上缩放默认密度资源，而对于低密度屏幕向下缩放。</p>
+<p>但是，当系统正在查找特定于密度的资源并且未在密度特定的目录中找到它时，它不会总是使用默认资源。该系统可改为使用其它密度特定资源中的一个，以便在缩放时提供更好的结果。例如，当寻找低密度资源并且它不可用时，系统倾向于按比例缩减资源的高密度版本，因为系统可以容易地将高密度资源缩小到低密度资源因子为0.5，与将中等密度资源缩放0.75倍相比，具有较少的假象。</p>
+</li>
+</ol>
+<h3 id="使用资源修饰符"><a href="#使用资源修饰符" class="headerlink" title="使用资源修饰符"></a>使用资源修饰符</h3><p>表1.配置限定符，允许您为不同的屏幕配置提供特殊资源。</p>
+<p>  <img src="/images/2016-12-24_224952.png" alt="图片丢了" title="optional title"></p>
+<blockquote>
+<p>注意：如果您要为Android 3.2及更高版本开发应用程序，请参阅有关为Android 3.2声明平板电脑版面的部分，以了解在为特定屏幕尺寸声明布局资源时应使用的新配置限定符（而不是使上述表的大小限定符 ）。</p>
+</blockquote>
+<p>请注意，当Android系统选择在运行时使用哪些资源时，它使用某些逻辑来确定“最佳匹配”资源。也就是说，您使用的限定符在所有情况下不必与当前屏幕配置完全匹配，以便系统使用它们。<strong>具体地，当基于尺寸限定符选择资源时，如果没有更好地匹配的资源，则系统将使用针对小于当前屏幕的屏幕设计的资源（例如，大尺寸屏幕将使用正常尺寸的屏幕资源，如果必要）。但是，如果唯一可用的资源大于当前屏幕，则系统不会使用它们，并且如果没有其他资源匹配设备配置，则应用程序将崩溃（例如，如果所有布局资源都使用xlarge限定符标记，但是设备是正常大小的屏幕）。</strong> 有关系统如何选择资源的详细信息，请参阅Android如何找到最佳匹配资源。</p>
+<blockquote>
+<p>提示：如果您有一些可绘制的资源，不应该别系统缩放调整（可能是因为您在运行时自己对图像进行了一些调整），您应该将它们放在一个具有nodpi配置限定符的目录中。具有此限定符的资源被认为是密度不可知的，并且系统不会扩展它们  </p>
+</blockquote>
+<h3 id="设计可替代的资源"><a href="#设计可替代的资源" class="headerlink" title="设计可替代的资源"></a>设计可替代的资源</h3><h4 id="提供可替代的layout"><a href="#提供可替代的layout" class="headerlink" title="提供可替代的layout"></a>提供可替代的layout</h4><p>确保三个原则：</p>
+<ul>
+<li>适合小屏幕</li>
+<li>针对更大的屏幕进行了优化，以利用额外的屏幕空间</li>
+<li>针对横向和纵向方向进行了优化</li>
+</ul>
+<blockquote>
+<p>如果使用背景资源在不同屏幕上有缩放问题的，可以提供nine-patch格式的drawable资源。</p>
+</blockquote>
+<h4 id="提供可替代的drawable"><a href="#提供可替代的drawable" class="headerlink" title="提供可替代的drawable"></a>提供可替代的drawable</h4><p>要为不同的密度创建替代的位图可绘图，您应该遵循六个广义密度之间的3：4：6：8：12：16缩放比例。 例如，如果对于中密度屏幕，位图可绘制为48x48像素，则所有不同的大小应为：</p>
+<ul>
+<li>36x36 (0.75x) for ldpi</li>
+<li>48x48 (1.0x baseline) for mdpi</li>
+<li>72x72 (1.5x) for hdpi</li>
+<li>96x96 (2.0x) for xhdpi</li>
+<li>144x144 (3.0x) for xxhdpi</li>
+<li>192x192 (4.0x) for xxxhdpi (只需要为启动图标提供该密度图片)</li>
+</ul>
+</div><!-- comment system--><div class="container"><hr></div></article><footer id="footer"><div class="container"><div class="bar"><div class="social"><a href="/atom.xml" target="_blank"><i class="fa fa-rss"></i></a></div><div class="footer">© 2016 <a href="/" rel="nofollow">dcoder3x</a>. Powered by <a rel="nofollow" target="_blank" href="https://hexo.io">Hexo</a>. Theme <a target="_blank" href="https://github.com/lotabout/very-simple">very-simple</a>.</div></div></div></footer><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+    $(".fancybox").fancybox();
+});
+</script></body></html>
